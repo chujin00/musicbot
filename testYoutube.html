@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test YouTube Embed</title>
+</head>
+<body>
+    <h1>Test YouTube Embed from URL</h1>
+    <div>
+        <label for="youtube-url">Enter YouTube URL: </label>
+        <input type="text" id="youtube-url" placeholder="Paste YouTube URL" style="width: 300px;">
+        <button onclick="embedVideo()">Embed Video</button>
+    </div>
+    
+    <div id="video-container" style="margin-top: 20px;"></div>
+
+    <script>
+        function embedVideo() {
+            const url = document.getElementById('youtube-url').value;
+            const videoId = url.match(/(?:v=|embed\/)([a-zA-Z0-9_-]+)/);
+
+            if (videoId && videoId[1]) {
+                // Construct the embed URL using the video ID
+                const embedUrl = `https://www.youtube.com/embed/${videoId[1]}`;
+
+                // Create iframe element and set the src attribute to the embed URL
+                const iframe = document.createElement('iframe');
+                iframe.width = "560";
+                iframe.height = "315";
+                iframe.src = embedUrl;
+                iframe.frameBorder = "0";
+                iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+                iframe.allowFullscreen = true;
+
+                // Insert the iframe into the video container
+                const container = document.getElementById('video-container');
+                container.innerHTML = ''; // Clear any previous content
+                container.appendChild(iframe);
+            } else {
+                alert('Invalid YouTube URL');
+            }
+        }
+    </script>
+</body>
+</html>
